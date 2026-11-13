@@ -52,3 +52,12 @@ Users register and sign in with email + password (`server/identity.js`, no extra
 - The catalog is small and served whole by `GET /api/catalog`; search and filters run in the browser (`src/pages/Home.jsx`, state in URL params `q, tab, city, type, beds, max, avail`). Move to server-side search if the catalog grows to thousands of rows.
 - Currency is AED, formatted in `src/utils/format.js` only. Browsing is public; the EOI form and My EOIs need an account (`<RequireAuth>` in `App.jsx`).
 - UI wording: keep EOI terms in the UI; there is no cart, wishlist or payment.
+
+## Deployment
+
+Live on Render (free web service `eoi-portal`) at https://eoi-portal.onrender.com, built from `render.yaml` (`npm ci --include=dev && npm run build`, `npm start`, health check `/api/health`, `NODE_VERSION=22`). GitHub remote: `coegithub/PropertyPortal`, branch `main`; every push to `main` auto-deploys.
+
+- `DATABASE_URL` is set only in Render's Environment tab (currently the same Neon database as local development). Never run `npm run smoke` or `npm run db:reset` against production: both would add or wipe live data.
+- Session cookies are `Secure` and rely on `app.set('trust proxy', 1)` (production only) behind Render's HTTPS proxy: open the site over `https://`.
+- The free plan sleeps after ~15 min idle; the first request then takes 30-60 s.
+- Git on this Windows machine is at `C:\Program Files\Git\cmd` and may not be on PATH in new shells. Pushes worked through the stored Git Credential Manager sign-in.
