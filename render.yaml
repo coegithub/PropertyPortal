@@ -1,0 +1,18 @@
+# Render blueprint. In Render: New > Blueprint > pick this repo. DATABASE_URL is asked for on first deploy
+# (paste your Neon pooled connection string there; it is never stored in this file).
+services:
+  - type: web
+    name: eoi-portal
+    runtime: node
+    plan: free
+    # --include=dev: Vite is a devDependency and is needed for the build.
+    buildCommand: npm ci --include=dev && npm run build
+    startCommand: npm start
+    healthCheckPath: /api/health
+    autoDeploy: true
+    envVars:
+      # The server needs Node >= 22.9 (package.json engines); Render picks the latest 22.x.
+      - key: NODE_VERSION
+        value: "22"
+      - key: DATABASE_URL
+        sync: false

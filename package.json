@@ -1,0 +1,28 @@
+{
+  "name": "eoi-portal",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "node --env-file-if-exists=.env server/index.js",
+    "build": "vite build",
+    "start": "node --env-file-if-exists=.env server/index.js --prod",
+    "db:reset": "node --env-file-if-exists=.env server/reset-db.js",
+    "smoke": "node scripts/smoke-test.mjs"
+  },
+  "engines": {
+    "node": ">=22.9"
+  },
+  "dependencies": {
+    "@neondatabase/serverless": "^1.2.0",
+    "express": "^4.22.3",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^6.26.2",
+    "ws": "^8.22.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.3.2",
+    "vite": "^5.4.8"
+  }
+}
